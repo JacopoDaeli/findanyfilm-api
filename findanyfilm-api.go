@@ -49,7 +49,7 @@ func main() {
 
     var jResp bytes.Buffer
     jResp.Write(body)
-    c.String(200, jResp.String())
+    c.String(resp.StatusCode, jResp.String())
 
     // movies := make([]Movie, 0)
     // json.Unmarshal(body, &movies)
@@ -130,7 +130,7 @@ func main() {
 
     var jResp bytes.Buffer
     jResp.Write(body)
-    c.String(200, jResp.String())
+    c.String(resp.StatusCode, jResp.String())
   })
 
   r.Run() // listen and server on 0.0.0.0:8080
