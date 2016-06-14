@@ -1,0 +1,56 @@
+{
+	"ImportPath": "github.com/imperodesign/findanyfilm-api",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v60",
+	"Deps": [
+		{
+			"ImportPath": "github.com/PuerkitoBio/goquery",
+			"Comment": "v0.3.2-87-gaeecb06",
+			"Rev": "aeecb06b1e04a72e7d3312468c5b92f6bb2f3459"
+		},
+		{
+			"ImportPath": "github.com/andybalholm/cascadia",
+			"Rev": "3ad29d1ad1c4f2023e355603324348cf1f4b2d48"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin",
+			"Comment": "v1.0rc1-248-g4a6bc4a",
+			"Rev": "4a6bc4aac4607e253bcda67c8c5bcda693d2388e"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/binding",
+			"Comment": "v1.0rc1-248-g4a6bc4a",
+			"Rev": "4a6bc4aac4607e253bcda67c8c5bcda693d2388e"
+		},
+		{
+			"ImportPath": "github.com/gin-gonic/gin/render",
+			"Comment": "v1.0rc1-248-g4a6bc4a",
+			"Rev": "4a6bc4aac4607e253bcda67c8c5bcda693d2388e"
+		},
+		{
+			"ImportPath": "github.com/golang/protobuf/proto",
+			"Rev": "d120e2f9573fd13ef964982b1d1f118cee00e4d0"
+		},
+		{
+			"ImportPath": "github.com/manucorporat/sse",
+			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+		},
+		{
+			"ImportPath": "golang.org/x/net/context",
+			"Rev": "9d8ef8d73b53840886e4a772c72f2b7d396cb37c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html",
+			"Rev": "9d8ef8d73b53840886e4a772c72f2b7d396cb37c"
+		},
+		{
+			"ImportPath": "golang.org/x/net/html/atom",
+			"Rev": "9d8ef8d73b53840886e4a772c72f2b7d396cb37c"
+		},
+		{
+			"ImportPath": "gopkg.in/go-playground/validator.v8",
+			"Comment": "v8.17.1",
+			"Rev": "014792cf3e266caff1e916876be12282b33059e0"
+		}
+	]
+}
