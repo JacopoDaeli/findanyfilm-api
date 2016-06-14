@@ -100,7 +100,7 @@ func main() {
     c.String(200, ids[last])
   })
 
-  r.GET("/movies/find-by-movie-date-postcode/:movie/:date/:postcode", func(c *gin.Context) {
+  r.GET("/cinemas/find-by-movie-date-postcode/:movie/:date/:postcode", func(c *gin.Context) {
     var url bytes.Buffer
 
     movie := c.Param("movie")
