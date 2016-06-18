@@ -25,3 +25,6 @@ _testmain.go
 
 # Build
 findanyfilm-api
+
+# Deploy
+dokku-deploy
