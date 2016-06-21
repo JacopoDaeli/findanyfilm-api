@@ -62,14 +62,14 @@ func main() {
 	r.GET("/movies/find-by-cinema-date/:cinema/:date", func(c *gin.Context) {
 		var url bytes.Buffer
 
-		cinema := c.Param("movie")
+		cinema := c.Param("cinema")
 		date := c.Param("date")
 
 		url.WriteString("http://www.findanyfilm.com/api/screenings/by_venue_id/venue_id/")
 		url.WriteString(cinema)
 		url.WriteString("/date_from/")
 		url.WriteString(date)
-		
+
 		fmt.Printf(url.String())
 
 		resp, err := http.Get(url.String())
