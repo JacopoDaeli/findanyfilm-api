@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
-	// "encoding/json"
+	"encoding/json"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
 	"io/ioutil"
@@ -40,23 +40,23 @@ func main() {
 			log.Fatal(err)
 		}
 
-		var jResp bytes.Buffer
-		jResp.Write(body)
-		c.String(resp.StatusCode, jResp.String())
+		// var jResp bytes.Buffer
+		// jResp.Write(body)
+		// c.String(resp.StatusCode, jResp.String())
 
-		// movies := make([]Movie, 0)
-		// json.Unmarshal(body, &movies)
-		//
-		// if len(movies) == 0 {
-		//   c.JSON(404, gin.H{
-		//     "status": 404,
-		//     "error": "No movie found",
-		//   })
-		// } else {
-		//   var jResp bytes.Buffer
-		//   jResp.Write(body)
-		//   c.String(200, jResp.String())
-		// }
+		movies := make([]Movie, 0)
+		json.Unmarshal(body, &movies)
+
+		if len(movies) == 0 {
+		  c.JSON(404, gin.H{
+		    "status": 404,
+		    "error": "No movie found",
+		  })
+		} else {
+		  var jResp bytes.Buffer
+		  jResp.Write(body)
+		  c.String(200, jResp.String())
+		}
 	})
 
 	r.GET("/movies/find-by-cinema-date/:cinema/:date", func(c *gin.Context) {
