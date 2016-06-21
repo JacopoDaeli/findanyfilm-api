@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"encoding/json"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gin-gonic/gin"
@@ -26,23 +25,31 @@ func main() {
 		url.WriteString("http://www.findanyfilm.com/search/live-film?term=")
 		url.WriteString(strings.Replace(name, " ", "+", -1))
 
-		fmt.Printf(url.String())
-
 		resp, err := http.Get(url.String())
-		if err != nil {
-			log.Fatal(err)
-		}
 
 		defer resp.Body.Close()
 
-		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			c.JSON(500, err)
+			return
 		}
 
-		// var jResp bytes.Buffer
-		// jResp.Write(body)
-		// c.String(resp.StatusCode, jResp.String())
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			c.JSON(500, err)
+			return
+		}
+
+		if resp.StatusCode >= 400 {
+			var errorMessage bytes.Buffer
+			errorMessage.WriteString("FindAnyFilm returns: ")
+			errorMessage.WriteString(resp.Status)
+			c.JSON(500, gin.H{
+		    "status": 500,
+		    "error": errorMessage.String(),
+		  })
+			return
+		}
 
 		movies := make([]Movie, 0)
 		json.Unmarshal(body, &movies)
@@ -50,12 +57,10 @@ func main() {
 		if len(movies) == 0 {
 		  c.JSON(404, gin.H{
 		    "status": 404,
-		    "error": "No movie found",
+		    "error": "Movie not found",
 		  })
 		} else {
-		  var jResp bytes.Buffer
-		  jResp.Write(body)
-		  c.String(200, jResp.String())
+		  c.JSON(resp.StatusCode, movies)
 		}
 	})
 
@@ -73,19 +78,23 @@ func main() {
 		fmt.Printf(url.String())
 
 		resp, err := http.Get(url.String())
-		if err != nil {
-			log.Fatal(err)
-		}
 
 		defer resp.Body.Close()
 
+		if err != nil {
+			c.JSON(500, err)
+			return
+		}
+
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			c.JSON(500, err)
+			return
 		}
 
 		var jResp bytes.Buffer
 		jResp.Write(body)
+		c.Header("Content-Type", resp.Header.Get("Content-Type"))
 		c.String(resp.StatusCode, jResp.String())
 	})
 
@@ -99,10 +108,11 @@ func main() {
 
 		doc, err := goquery.NewDocument(url.String())
 		if err != nil {
-			log.Fatal(err)
+			c.JSON(500, err)
+			return
 		}
 
-		ids := make([]string, 10)
+		cinemas := make([]Cinema, 10)
 		last := -1
 
 		doc.Find(".cinemaResult").EachWithBreak(func(i int, s *goquery.Selection) bool {
@@ -114,13 +124,16 @@ func main() {
 
 			re := regexp.MustCompile("[0-9]+")
 			tmpId := re.FindAllString(attr, -1)
-			ids[i] = tmpId[0]
+
+			cinemaName := s.Find("span").Text()
+			cinemas[i] = Cinema{tmpId[0], cinemaName}
+
 			last = i
 
 			return true
 		})
 
-		c.String(200, ids[last])
+		c.JSON(200, cinemas)
 	})
 
 	r.GET("/cinemas/find-by-movie-date-postcode/:movie/:date/:postcode", func(c *gin.Context) {
@@ -140,19 +153,23 @@ func main() {
 		fmt.Printf(url.String())
 
 		resp, err := http.Get(url.String())
-		if err != nil {
-			log.Fatal(err)
-		}
 
 		defer resp.Body.Close()
 
+		if err != nil {
+			c.JSON(500, err)
+			return
+		}
+
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			c.JSON(500, err)
+			return
 		}
 
 		var jResp bytes.Buffer
 		jResp.Write(body)
+		c.Header("Content-Type", resp.Header.Get("Content-Type"))
 		c.String(resp.StatusCode, jResp.String())
 	})
 
