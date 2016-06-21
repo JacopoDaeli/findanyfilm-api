@@ -59,6 +59,36 @@ func main() {
 		// }
 	})
 
+	r.GET("/movies/find-by-cinema-date/:cinema/:date", func(c *gin.Context) {
+		var url bytes.Buffer
+
+		cinema := c.Param("movie")
+		date := c.Param("date")
+
+		url.WriteString("http://www.findanyfilm.com/api/screenings/by_venue_id/venue_id/")
+		url.WriteString(cinema)
+		url.WriteString("/date_from/")
+		url.WriteString(date)
+		
+		fmt.Printf(url.String())
+
+		resp, err := http.Get(url.String())
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		defer resp.Body.Close()
+
+		body, err := ioutil.ReadAll(resp.Body)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		var jResp bytes.Buffer
+		jResp.Write(body)
+		c.String(resp.StatusCode, jResp.String())
+	})
+
 	r.GET("/cinemas/find-by-postcode/:postcode", func(c *gin.Context) {
 		var url bytes.Buffer
 		postcode := c.Param("postcode")

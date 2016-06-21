@@ -1,5 +1,7 @@
 FROM golang
 
+MAINTAINER Jacopo Daeli
+
 RUN go get github.com/tools/godep
 
 ENV GIN_MODE=release

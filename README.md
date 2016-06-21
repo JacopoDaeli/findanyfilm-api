@@ -5,6 +5,7 @@ An API for http://findanyfilm.com written in Go. A directory of films and UK Cin
 
 #### Movies
 - /movies/find-by-name/:name
+- /movies/find-by-cinema-date/:cinema/:date
 
 #### Cinemas
 - /cinemas/find-by-postcode/:postcode
